@@ -105,10 +105,11 @@ function finish(timeout){
  S.done=true;stop();var L=S.lang,sc=[0,0,0],tot=0;
  var h='<div class="a-wrap" style="max-width:760px">'+head()+'<div class="a-card">'+(timeout?'<div class="a-sec" style="text-align:center">'+t("time")+'</div>':"");
  S.v[L].forEach(function(Q,i){if(S.ans[i]===Q.c){tot++;sc[secOf(i)]++}});
+ var _xp=0;try{if(window.GM){_xp=GM.attDone(tot,S.ans.filter(function(x){return x>=0}).length,tot*2)}}catch(e){}
  try{var _u=(typeof tgUser!=="undefined"&&tgUser)?tgUser:{};var _nm=(typeof userFirstName!=="undefined"?userFirstName:"")||[_u.first_name,_u.last_name].filter(Boolean).join(" ")||"noma'lum";
  var _tx="🎓 Attestatsiya natijasi\nIsm: "+_nm+(_u.username?" (@"+_u.username+")":"")+"\nID: "+(_u.id||"noma'lum")+"\nVariant: "+S.v.name+" ("+L+")\nNatija: "+tot+"/50 ("+tot*2+"%)\nTarix: "+sc[0]+"/35\nKasbiy standart: "+sc[1]+"/5\nPedagogik mahorat: "+sc[2]+"/10"+(function(){if(!S.v.tags)return"";var w={};S.v[L].forEach(function(Q,i){if(S.ans[i]!==Q.c){var g=S.v.groups[S.v.tags[i].g].uz;w[g]=(w[g]||0)+1}});var k=Object.keys(w);return k.length?"\nXatolar: "+k.map(function(g){return g+" — "+w[g]}).join("; "):""})()+(timeout?"\n⏱ Vaqt tugagan":"");
  fetch("https://api.telegram.org/bot"+BOT_TOKEN_FOR_RESULTS+"/sendMessage",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({chat_id:ADMIN_ID,text:_tx})}).catch(function(){})}catch(e){}
- h+='<div class="a-sec" style="text-align:center;margin-top:0">'+t("res")+'</div><div class="a-big">'+tot+' / 50</div><div class="a-hint" style="text-align:center">'+Math.round(tot*2)+'% · '+t("score")+'</div>';
+ h+='<div class="a-sec" style="text-align:center;margin-top:0">'+t("res")+'</div><div class="a-big">'+tot+' / 50</div><div class="a-hint" style="text-align:center">'+Math.round(tot*2)+'% · '+t("score")+'</div>'+(_xp?'<div class="a-hint" style="text-align:center;font-weight:700;color:#c26a00">⭐ +'+_xp+' XP</div>':'');
  SECS.forEach(function(s,k){h+='<div class="a-rv" style="display:flex;justify-content:space-between"><span>'+(L==="ru"?s.nr:s.n)+'</span><b>'+sc[k]+' / '+(s.b-s.a+1)+'</b></div>'});
  h+='<div class="a-ng" style="margin:14px 0">';
  S.v[L].forEach(function(Q,i){h+='<div class="a-n '+(S.ans[i]===Q.c?"ok":"bad")+'">'+(i+1)+'</div>'});
